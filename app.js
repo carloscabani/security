@@ -6,16 +6,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var jwt = require('jsonwebtoken');
-var older_token = jwt.sign(
-  { 
-    foo: 'bar', 
-    iat: Math.floor(Date.now() / 1000), // issued at time
-    exp: Math.floor(Date.now() / 1000) + (60 * 60) // expires in 1 hour
-  }, 
-  'shhhhh'
-);
-
 
 const session = require('express-session');
  /* 1. Referencia a los middlewares */
@@ -46,14 +36,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', (req, res, next) => {
-  res.locals.older_token = older_token; // Pass the token to the view
-  next();
-}, indexRouter);
-
-
-app.use('/', indexRouter);
 app.use('/users', authenticateSession, authorizationSession, usersRouter);
+app.use('/', indexRouter);
 app.use('/token', authenticateSession, tokenRouter);
 
 // catch 404 and forward to error handler
