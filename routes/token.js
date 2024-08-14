@@ -1,21 +1,28 @@
-var express = require('express');
-var router = express.Router();
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+const express = require('express');
+const router = express.Router();
 
-/* GET token listing. */
-router.get('/', async function (req, res, next) {
+const TOKEN_SECRET = process.env.TOKEN_SECRET
+
+router.get('/', async function(req, res, next) {
   try {
-    const tokenData = {
-      info: 'this is sensitive data'
+    const user = {
+      id: req.body.id,          
+      username: req.body.username 
+    }
+
+    const payload = {
+      id: user.id,
+      username: user.username,
     };
-    const secretKey = process.env.TOKEN_SECRET;
-    const jwtToken = jwt.sign(tokenData, secretKey, {
-      expiresIn: '1h'
-    });
-    res.render('token', { title: 'Pagina de token', token: jwtToken });
+
+    const token = jwt.sign(payload, TOKEN_SECRET, { expiresIn: '1h' });
+
+    res.render('token', { title: 'Página de token', token: token });
+
   } catch (error) {
-    console.error(error);
-    res.status(500).send(error.message);
+    console.error('Error al generar el token:', error);
+    res.status(500).json({ message: 'Error al generar el token', error: error.message });
   }
 });
 
