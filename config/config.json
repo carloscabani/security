@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Perla06",
+    "password": "Basededatos2022*",
     "database": "security",
     "host": "127.0.0.1",
     "dialect": "mysql"
@@ -15,10 +15,10 @@
   },
   "production": {
     "username": "root",
-    "password": "aqwaljZcHFUhCuyYaWdJVSIPtVmKtEHu",
+    "password": "AWlxudOTCDppEoQPmyNcowwGLwsBNMIS",
     "database": "railway",
-    "host": "viaduct.proxy.rlwy.net",
+    "host": "junction.proxy.rlwy.net",
     "dialect": "mysql",
-    "port": "51656"
+    "port": "30187"
   }
 }
